@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.aspect.WebAspect;
 import com.spring.domain.FileProperties;
+import com.spring.domain.sys.MyException;
 import com.spring.service.HelloService;
 
 @RestController
@@ -58,5 +59,18 @@ public class HelloController {
 	@RequestMapping("/hello/jsp")
 	public String jsp(){
 		return "turntemplate";
+	}
+	@RequestMapping("/jsonerror")
+    public String json() throws MyException {
+        throw new MyException("发生错误2");
+    }
+	
+	@RequestMapping("/jsonexception")
+    public String exception() throws Exception {
+        throw new Exception("发生错误1");
+    }
+	@RequestMapping("/hello/500")
+	public String errorinternal(){
+		return "/error";
 	}
 }
