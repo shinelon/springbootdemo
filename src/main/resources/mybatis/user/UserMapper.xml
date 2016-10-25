@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.spring.dao.user.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.spring.domain.user.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="BaseWithRoleResultMap" type="com.spring.domain.user.User" extends="BaseResultMap" >
+    <collection property="roles" ofType="com.spring.domain.user.Role">
+    <!--因为两个表的主键都是id 需要修改个别名，否则只能查询出一个记录 -->
+        <id column="role_id" property="id" jdbcType="BIGINT" />
+        <result column="available" property="available" jdbcType="INTEGER" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="role" property="role" jdbcType="VARCHAR" />
+        <collection property="permissions" ofType="com.spring.domain.user.Permission">
+            <id column="permission_id" property="id" jdbcType="BIGINT" />
+            <result column="available" property="available" jdbcType="INTEGER" />
+            <result column="name" property="name" jdbcType="VARCHAR" />
+            <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+            <result column="parents_id" property="parentsId" jdbcType="VARCHAR" />
+            <result column="permission" property="permission" jdbcType="VARCHAR" />
+            <result column="resource_type" property="resourceType" jdbcType="VARCHAR" />
+            <result column="url" property="url" jdbcType="VARCHAR" />
+        </collection>
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, password, salt, state, username
+  </sql>
+  <select id="findByUsername" resultMap="BaseWithRoleResultMap" parameterType="java.lang.String">
+    SELECT
+      u.id,
+      u.name,
+      u.password,
+      u.salt,
+      u.state,
+      u.username,
+      ur.role_id,
+      r.available,
+      r.description,
+      r.role,
+      rp.permission_id,
+      p.available,
+      p.name,
+      p.parent_id,
+      p.permission,
+      p.resource_type,
+      p.url
+    FROM t_user u,
+      t_user_role ur,
+      t_role r,
+      t_role_permission rp,
+      t_permission p
+    WHERE u.id = ur.user_id
+        AND ur.role_id = r.id
+        AND ur.role_id=rp.role_id
+        AND rp.permission_id=p.id
+        AND u.username = #{username,jdbcType=VARCHAR}
+</select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.spring.domain.user.User" >
+    insert into t_user (id, name, password, 
+      salt, state, username
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{salt,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.spring.domain.user.User" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="salt != null" >
+        salt,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.spring.domain.user.User" >
+    update t_user
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.spring.domain.user.User" >
+    update t_user
+    set name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
