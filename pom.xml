@@ -12,7 +12,6 @@
 
     <name>springbootdemo</name>
     <description>Demo project for Spring Boot</description>
-
     <!-- <parent> -->
     <!-- <groupId>org.springframework.boot</groupId> -->
     <!-- <artifactId>spring-boot-starter-parent</artifactId> -->
@@ -37,6 +36,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <shiro.version>1.3.2</shiro.version>
     </properties>
     <!--去除springboot 默认日志，使用log4j2日志 start -->
     <dependencies>
@@ -108,8 +108,28 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
-
+        <!--shiro-spring -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <!-- utilts jar -->    
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
+        </dependency>
 
     </dependencies>
 
