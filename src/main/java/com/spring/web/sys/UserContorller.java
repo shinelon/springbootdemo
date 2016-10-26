@@ -30,10 +30,8 @@ public class UserContorller {
 		return null;
 	}
 	@RequestMapping("/get")
-	public User selectByPrimaryKey(){	
-		User u=userService.selectByPrimaryKey(1l);
-		System.out.println(u);
-		return u;
+	public String selectByPrimaryKey(){	
+		return "/templates/login";
 	}
 	
 	
