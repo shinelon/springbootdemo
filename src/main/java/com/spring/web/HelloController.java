@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spring.aspect.WebAspect;
 import com.spring.domain.FileProperties;
 import com.spring.service.HelloService;
+import com.spring.web.sys.BaseController;
 
 @RestController
-public class HelloController {
-	Logger logger = LoggerFactory.getLogger(WebAspect.class);
+public class HelloController extends BaseController {
 	@Autowired
 	private HelloService helloService;
 	@Autowired
@@ -35,25 +35,25 @@ public class HelloController {
 	 **/
 	@RequestMapping("/hello/{id}")
 	public String hello(@PathVariable String id,@RequestParam String name){
-		logger.info("id:{}",id);
-		logger.info("name:{}",name);
+		log.info("id:{}",id);
+		log.info("name:{}",name);
 		return "hello aop";
 	}
 	@RequestMapping("/hello/jdbc")
 	public Object testJdbc(){
 		Integer i=helloService.getDaoTest();
-		logger.info("jdbc:{}",i.toString());
+		log.info("jdbc:{}",i.toString());
 		return "ok";
 	}
 	@RequestMapping("/hello/jdbc/transactional")
 	public Object testJdbcTransactional(){
 		String i=helloService.getDaoTestTransactional();
-		logger.info("jdbc:{}",i.toString());
+		log.info("jdbc:{}",i.toString());
 		return "ok";
 	}
 	@RequestMapping("/hello/mybatis")
 	public Object testMybatis(){
-		return helloService.getMybatisStudent("张三");
+		return responseJson(helloService.getMybatisStudent("张三"));
 	}
 	@RequestMapping("/hello/jsp")
 	public String jsp(){
