@@ -152,7 +152,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <maimClass>com.spring.SpringbootdemoApplication</maimClass>
+                    <maimClass>${start-class}</maimClass>
                 </configuration>
                 <executions>
                     <execution>
