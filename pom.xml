@@ -16,14 +16,14 @@
     <!-- <groupId>org.springframework.boot</groupId> -->
     <!-- <artifactId>spring-boot-starter-parent</artifactId> -->
     <!-- <version>1.4.1.RELEASE</version> -->
-    <!-- <relativePath /> lookup parent from repository -->
+    <!-- <relativePath /> -->
     <!-- </parent> -->
 
     <!-- parent 和 dependencyManagement 必须有一个 用于项目依赖管理 -->
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <!--Import dependency management from Spring Boot -->
+                <!-- Import dependency management from Spring Boot -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>1.4.1.RELEASE</version>
@@ -151,14 +151,26 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <maimClass>com.spring.SpringbootdemoApplication</maimClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>1.8</source> <!-- 源代码使用的开发版本 -->
-                    <target>1.8</target> <!-- 需要生成的目标class文件的编译版本 -->
+                    <!-- 源代码使用的开发版本 -->
+                    <source>${java.version}</source>
+                    <!-- 需要生成的目标class文件的编译版本 -->
+                    <target>${java.version}</target>
                     <!-- 一般而言，target与source是保持一致的，但是，有时候为了让程序能在其他版本的jdk中运行(对于低版本目标jdk，源代码中需要没有使用低版本jdk中不支持的语法)，会存在target不同于source的情况 -->
 
                     <!-- 这下面的是可选项 -->
