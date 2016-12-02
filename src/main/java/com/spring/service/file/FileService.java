@@ -4,11 +4,14 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,9 +21,9 @@ import com.spring.exception.FileUploadException;
 @Service
 public class FileService {
 
-	private String msgFileEmpty="File is empty";
+	private String msgFileEmpty = "File is empty";
 
-	private String msgFileExists="File exists";
+	private String msgFileExists = "File exists";
 
 	public List<FileObject> list(String path) {
 		List<FileObject> files = new ArrayList<FileObject>();
@@ -62,4 +65,7 @@ public class FileService {
 		File file = new File(path + "/" + name);
 		return file.exists() && file.delete();
 	}
+
+	
+
 }

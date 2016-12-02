@@ -19,8 +19,8 @@
         <Logger name="org.hibernate.validator.internal.util.Version" level="warn" />  
         <Logger name="org.springframework" level="info" />  
         <Logger name="com.spring" level="debug" />  
-        <Logger name="com.alibaba.druid" level="debug" />
-        <Logger name="org.apache.shiro" level="trace" />   
+        <Logger name="com.alibaba.druid" level="info" />
+        <Logger name="org.apache.shiro" level="info" />   
         <Root level="info">  
             <AppenderRef ref="Console" />
 <!--             <AppenderRef ref="File1" />   -->

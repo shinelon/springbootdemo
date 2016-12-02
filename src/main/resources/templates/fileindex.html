@@ -21,7 +21,7 @@
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script>
-
+    <script src="../static/js/jquery.fileDownload.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             var progress = $('#progress');
@@ -76,7 +76,7 @@
 
         function appendFile(file) {
             $('#files').append('<tr><td>' + file.name + '</td><td>' + file.size + '</td><td>' + file.lastModified + '</td>' +
-                    '<td><input value="Delete" onclick="deleteFile(\'' + file.name + '\', this)" type="button"/></td></tr>');
+                    '<td><input value="Delete" onclick="deleteFile(\'' + file.name + '\', this)" type="button"/></td><td><input value="Download" onclick="downloadFile(\'' + file.name + '\', this)" type="button"/></td></tr>');
         }
 
         function deleteFile(name, button) {
@@ -92,6 +92,11 @@
                 }
             });
         }
+        
+        function downloadFile(name, button) {
+        	$.fileDownload('/file/download?name='+name)
+        }
+            
     </script>
 </head>
 <body>
